@@ -1,4 +1,4 @@
-![Header](https://i.im.ge/2022/09/26/1w8lCz.repo-rand-sales.jpg)
+![Header](https://gonzch.com/img/cloud/repos/lab_python_ventas.jpg)
 
 # Ventas aleatorias con Python
 
