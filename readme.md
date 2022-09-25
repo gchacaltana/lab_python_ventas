@@ -1,4 +1,4 @@
-![API Store](https://i.im.ge/2022/09/26/1w8lCz.repo-rand-sales.jpg)
+![Header](https://i.im.ge/2022/09/26/1w8lCz.repo-rand-sales.jpg)
 
 # Ventas aleatorias con Python
 
