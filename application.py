@@ -184,7 +184,7 @@ def main():
 
             ticket_igv: float = ticket_subtotal*IGV_PERCENT/100
             ticket_total:float = ticket_subtotal + ticket_igv
-            ticket_points:int = math.ceil(ticket_subtotal/VALUE_POINT)
+            ticket_points:int = math.floor(ticket_subtotal/VALUE_POINT)
 
             # Creamos el diccionario para el ticket de venta
             ticket:Dict[str, str|float] = {
@@ -198,9 +198,68 @@ def main():
 
             list_tickets.append(ticket)
 
+        # Mostrando reporte
+
+        # Calculando el importe total de descuentos de todos los tickets de venta
+
+        # Alternativa 1
+        """
+        total_discount:float = 0
+        for k, ticket in enumerate(list_tickets):
+            total_discount += ticket['discount']
+
+        rep_total_discount = round(total_discount,2)
+        """
+
+        #Alternativa 2
+        rep_total_discount:float = round(sum([float(v["discount"]) for k, v in enumerate(list_tickets)]), 2)
+
+        # Calculando la suma total de IGV cobrado
+        rep_total_igv:float = round(sum([float(v["igv"]) for k, v in enumerate(list_tickets)]), 2)
+
+        # Calculando la suma total de ingresos
+        rep_total_sale:float = round(sum([float(v["total"]) for k, v in enumerate(list_tickets)]), 2)
+
+        # Aplicando formato de moneda a la variable rep_total_sale
+        display_total_sale:str = "{}{:,.2f}".format(CURRENCY_SYMBOL, rep_total_sale)
+
+        # Calcuando el total de puntos entregados
+        rep_total_points:int = sum([int(v["points"]) for k, v in enumerate(list_tickets)])
+
+        # Calculando el valor del ticket promedio de venta.
+        ticket_avg:float = round(rep_total_sale / sales, 2)
+
+        # Ordenemos lista de tickets (de menor a mayor)
+        sorted_tickets:List[Dict[str, str | float]] = sorted(list_tickets, key=lambda x: x['total'])
+
+        # Obtenemos la cantidad de tickets cuyo importe supera el ticket promedio
+        rep_tickets_higher_than:int = len(
+            [k for k, v in enumerate(sorted_tickets) if float(v['total']) > ticket_avg])
+
+        # Obtenemos la cantidad tickets que tienen descuento.
+        tickets_with_discount:int = len(
+            [k for k, v in enumerate(sorted_tickets) if float(v['discount']) > 0])
+
+        # Calculamos el porcentaje de tickets que tienen descuento
+        percent_tickets_with_discount = math.floor(
+            (tickets_with_discount*100) / sales)
+
+        print("\n") # salto de linea
         print(f"Tienda: {store['name']}")
-        print(f"Total de Tickets: {len(list_tickets)}")
-        #print(f"{store['name']} Total de Tickets: {sales}")
+        print("*"*30) # mostrar una linea de asteriscos
+        print(f"Total de Ventas: {len(list_tickets)}")
+        print(f"Importe Total de Ventas: {display_total_sale}")
+        print(f"Ticket Promedio de Ventas: {ticket_avg}")
+        print(f"Ticket de Venta más baja: {sorted_tickets[0]['total']}")
+        print(sorted_tickets[0])
+        print(f"Ticket de Venta más alta: {round(float(sorted_tickets[-1]['total']),2)}")
+        print(
+            f"Total de Tickets mayor al promedio de venta: {rep_tickets_higher_than}")
+        print(f"Total de descuento: {rep_total_discount}")
+        print(
+            f"Tickets con descuento: {tickets_with_discount} ({percent_tickets_with_discount}%)")
+        print(f"Total IGV: {rep_total_igv}")
+        print(f"Total de Puntos entregados: {rep_total_points}")
 
 
 if __name__ == "__main__":
