@@ -14,7 +14,7 @@ def main():
     """
 
     # Lista de tiendas.
-    stores: List[Dict[str, str, int, int, float]] = [
+    stores: List[Dict[str, str]] = [
         {
             "code": "MIR",
             "name": "Miraflores",
@@ -52,7 +52,7 @@ def main():
         }
     ]
 
-    products: List[Dict[str, float, int]] = [
+    products: List[Dict[str, str]] = [
         {
             "name": "Memoria USB Kingston 64 GB",
             "base_sale_price": 38.90,
